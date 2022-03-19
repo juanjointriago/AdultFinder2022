@@ -1,21 +1,23 @@
 import { StyleSheet } from "react-native";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 import { globalColors } from "./Color";
+import { theme } from "./theme";
 
 export const globalStyles = StyleSheet.create({
   backButtonStyle: {
-    zIndex: 999,
-    elevation: 9,
-    textAlign: "center",
+    width: 24,
+    height: 24,
+  },
+  header: {
+    fontSize: 21,
+    color: theme.colors.primary,
+    fontWeight: 'bold',
+    paddingVertical: 12,
   },
   circleBack: {
-    backgroundColor: globalColors.light,
-    width: 40,
-    height: 40,
-    borderRadius: 7.217919826507568,
-    elevation: 20,
-    justifyContent: "center",
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    position: 'absolute',
+    top: 10 + getStatusBarHeight(),
+    left: 4,
   },
   defaultBadgeStyle: {
     bottom: 18,
@@ -58,7 +60,30 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 24,
-  }
+  },
+  forgotPassword: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginBottom: 0,
+  },
+  registerLink: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginBottom: 0,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  forgot: {
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    color: theme.colors.text,
+  },
+  link: {
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+  },
 
 
 
