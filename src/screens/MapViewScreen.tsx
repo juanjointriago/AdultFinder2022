@@ -97,8 +97,8 @@ export const MapViewScreen = () => {
                     scrollDuringRotateOrZoomEnabled
                     customMapStyle={mapsStyle}
                     style={[globalStyles.absoluteFill, {
-                        marginVertical: '20%',
-                        height: '90%',
+                        marginVertical: '50%',
+                        height: '50%',
                         width: '100%',
                     }]}
 
