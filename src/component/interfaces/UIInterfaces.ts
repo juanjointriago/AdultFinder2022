@@ -28,3 +28,11 @@ export interface homeMenuCard {
     textSize?: number,
 }
 
+export interface coords {
+    lat: number,
+    lng: number
+}
+export const deltaCoords: coords = {
+    lat: 0.1,
+    lng: 0.19
+}

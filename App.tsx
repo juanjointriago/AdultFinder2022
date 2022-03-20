@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { authentication } from './src/firebase/firebase-config';
 import OneSignal from 'react-native-onesignal';
 import { Provider } from 'react-native-paper';
+import { AuthenticatedUserProvider } from './src/data/AuthenticatedUserProvider';
 
 
 
@@ -20,11 +21,11 @@ const App = () => {
   }, [])
 
   return (
-      <Provider>
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
-      </Provider>
+    <Provider>
+      <AuthenticatedUserProvider>
+        <Navigation />
+      </AuthenticatedUserProvider>
+    </Provider>
   )
 
 }

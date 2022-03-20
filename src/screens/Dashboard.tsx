@@ -4,10 +4,12 @@ import { authentication, db } from '../firebase/firebase-config';
 import { collection, getDocs } from 'firebase/firestore/lite';
 import { navInterface } from '../data/interface';
 import { HomeManuCard } from '../component/containers/HomeManuCard';
-import { ScrollView, View } from 'react-native';
+import { Image, ScrollView, View, Text } from 'react-native';
 import { globalStyles } from '../component/styles/GlobalStyles';
 import { BackButton } from '../component/buttons/BackButton';
 import { globalColors } from '../component/styles/Color';
+import { Logo } from '../component/images/Logo';
+import { ICON } from '../data/const';
 
 export const Dashboard = ({ navigation }: navInterface) => {
   const [user, setUser] = useState({})
@@ -24,7 +26,7 @@ export const Dashboard = ({ navigation }: navInterface) => {
 
   const LogOut = () => {
     signOut(authentication).then((res) => {
-
+      navigation.navigate('Login')
     }).catch((e) => {
       console.warn(e)
     })
@@ -32,39 +34,47 @@ export const Dashboard = ({ navigation }: navInterface) => {
   return (
     <View>
       <BackButton />
-      <ScrollView style={{ marginTop: '20%' }}>
+      <ScrollView style={{ marginTop: '10%' }}>
+        <View style={{flexDirection: 'row', padding: '10%'}}>
+          <Text style={{alignSelf: 'flex-end', fontSize: 34}}>Bienvenido </Text>
+        <Image source={ICON} style={{width: 75, height: 75, alignSelf: 'flex-end'}} />
+        </View>
         <View>
           <View style={globalStyles.cardTwoConatinerStyle}>
             <HomeManuCard
-              descriptionText='Monitorear paciente'
+              descriptionText='Ubicar paciente'
               imageSrc='location-outline'
-               />
-            <HomeManuCard
-              descriptionText='Perímetro'
-              imageSrc='map-outline'
-              backgroundColor={globalColors.gray} />
-          </View>
-          <View style={globalStyles.cardTwoConatinerStyle}>
+              onPress={() => navigation.navigate('MapViewCIrcleScreen')}
+            />
             <HomeManuCard
               descriptionText='Llegar al paciente'
               imageSrc='navigate-outline'
-              onPress={()=> navigation.navigate('MapViewScreen')}
-               />
-               <HomeManuCard
-              descriptionText='Salir'
-              imageSrc='navigate-outline'
-              onPress={()=> navigation.navigate('MapViewScreen')}
-               />
+              onPress={() => navigation.navigate('MapViewScreen')}
+              backgroundColor={globalColors.gray}
+            />
           </View>
           <View style={globalStyles.cardTwoConatinerStyle}>
+
             <HomeManuCard
               descriptionText='Info Paciente'
               imageSrc='information-circle-outline'
               backgroundColor={globalColors.gray}
-               />
+            />
             <HomeManuCard
               descriptionText='Info Cuidador'
               imageSrc='information-outline' />
+          </View>
+          <View style={globalStyles.cardTwoConatinerStyle}>
+
+            <HomeManuCard
+              descriptionText='Perímetro'
+              imageSrc='radio-outline'/>
+            <HomeManuCard
+              descriptionText='Salir'
+              imageSrc='log-out-outline'
+              backgroundColor={globalColors.gray}
+              onPress={LogOut}
+            />
           </View>
         </View>
       </ScrollView>

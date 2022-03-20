@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import MapView, { Region, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
-import { navInterface } from '../data/interface';
 import Geolocation from 'react-native-geolocation-service';
 import { View } from 'react-native';
 import { Popup } from 'react-native-map-link';
@@ -8,18 +7,7 @@ import { globalStyles, mapsStyle } from '../component/styles/GlobalStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalColors } from '../component/styles/Color';
 import { BackButton } from '../component/buttons/BackButton';
-
-
-
-export interface coords {
-    lat: number,
-    lng: number
-}
-export const deltaCoords: coords = {
-    lat: 0.1,
-    lng: 0.19
-}
-
+import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
 
 export const MapViewScreen = () => {
     const otherUserLocation: coords = {
@@ -111,14 +99,14 @@ export const MapViewScreen = () => {
                                 latitude: otherUserLocation.lat,
                                 longitude: otherUserLocation.lng
                             }}
-                        title={'Ubicación de Cliente'}
-                        description={`Ir a ubicación del cliente`}
+                        title={'Ubicación de Paciente'}
+                        description={`Ir a ubicación del Paciente`}
                         onCalloutPress={
                             () => setVisiblePopup(true)
                         }
                     >
                         <Icon
-                            name='person-circle' size={30} color={globalColors.primary} />
+                            name='walk-outline' size={30} color={globalColors.primary} />
                     </Marker>
                     <Marker
                         coordinate={
@@ -127,10 +115,10 @@ export const MapViewScreen = () => {
                                 longitude: location.lng
                             }}
                         title={'Su ubicación'}
-                        description={`Aquí se encuentra usted`}
+                        description={`Punto de partida`}
                     >
                         <Icon
-                            name='briefcase' size={25} color={globalColors.secondary} />
+                            name='radio-outline' size={25} color={globalColors.secondary} />
                     </Marker>
 
                 </MapView>

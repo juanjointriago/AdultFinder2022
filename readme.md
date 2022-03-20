@@ -80,3 +80,5 @@ gradlew assembleRelease
 # para MAC OSX o terminal bash
 
 ./gradlew assembleRelease
+
+# si por algún motivo al compilar la app los iconos no aparecen reinstale la libreria de vector-icons dentro del package.json o cualquier otra puede realizar el mismo proceso

@@ -51,7 +51,7 @@ export const Login = ({ navigation }: navInterface) => {
     <Background>
       <BackButton />
       <Logo />
-      <Header title='Ingresemos por aquí' />
+      <Text style={{fontSize: 28, color: globalColors.secondary}} >Bienvenido de Nuevo...! 😀</Text>
       <TextInput
         error={!!email.error}
         errorText={email.error}
