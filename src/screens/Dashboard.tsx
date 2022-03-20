@@ -1,10 +1,14 @@
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native-paper';
 import { authentication, db } from '../firebase/firebase-config';
 import { collection, getDocs} from 'firebase/firestore/lite';
+import { navInterface } from '../data/interface';
+import { HomeManuCard } from '../component/containers/HomeManuCard';
+import { ScrollView, View } from 'react-native';
+import { globalStyles } from '../component/styles/GlobalStyles';
+import { BackButton } from '../component/buttons/BackButton';
 
-export const Dashboard = () => {
+export const Dashboard = ({navigation}:navInterface) => {
   const [user, setUser] = useState({})
   const getUserData = async () =>{
     const userData = collection(db, 'users');
@@ -19,13 +23,22 @@ export const Dashboard = () => {
   
   const LogOut = () => {
     signOut(authentication).then((res) => {
-      //for get data of user
 
     }).catch((e) => {
       console.warn(e)
     })
   }
   return (
-    <Text>{user}</Text>
+    <View>
+      <BackButton/>
+      <ScrollView style={{ marginTop: '20%' }}>
+        <View>
+          <View style={globalStyles.cardTwoConatinerStyle}>
+            <HomeManuCard 
+            descriptionText='MONITOREAR AL PACIENTE'/>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   )
 }

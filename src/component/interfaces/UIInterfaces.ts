@@ -17,3 +17,14 @@ export interface header {
     typeRightButton?: 'notification' | null,
     typeLeftButton?: 'back' | null,
 }
+export interface homeMenuCard {
+    onPress?: () => void | undefined,
+    backgroundColor?: string,
+    iconInside?: boolean,
+    iconSrc?: string,
+    iconPadding?: string,
+    imageSrc?: string,
+    descriptionText?: string,
+    textSize?: number,
+}
+

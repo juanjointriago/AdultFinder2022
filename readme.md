@@ -25,6 +25,9 @@ cd android
 3
 ./gradlew assembleDebug
 
+or directamente sin acceder al directorio android
+cd android &&./gradlew assembleDebug
+
 # encontrará el apk en la ruta de android/app/build/outputs/apk/debug/apk-debug.apk
 
 # ojo si desea que se compile en modo producción o release se recomienda hacer unit testing de los componentes y funciones con jest y digitar el siguiente comando

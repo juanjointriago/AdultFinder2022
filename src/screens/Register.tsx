@@ -12,7 +12,7 @@ import { dniValidator, emailValidator, nameValidator, passwordValidator, phoneVa
 import { navInterface } from '../data/interface';
 import { PaperSelect } from 'react-native-paper-select';
 import { ScrollView } from 'react-native-gesture-handler';
-import { addDoc, doc, setDoc, collection } from 'firebase/firestore/lite';
+import { addDoc, collection } from 'firebase/firestore/lite';
 import { db, authentication } from '../firebase/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -70,7 +70,7 @@ export const Register = ({ navigation }: navInterface) => {
       setDni({ ...dni, error: dniError });
       return
     }
-    createUserWithEmailAndPassword(authentication, email.value, password.value);
+    createUserWithEmailAndPassword(authentication, email.value, password.value)
     await addDoc(collection(db, 'users',)
       , {
         name: name.value,
@@ -84,6 +84,7 @@ export const Register = ({ navigation }: navInterface) => {
         dni: dni.value,
         phone: phone.value
       });
+    console.log('Usuario agregado exitosamente: ', { user });
     //send data to firebase
     navigation.navigate('Login');
   }

@@ -20,11 +20,11 @@ const App = () => {
   }, [])
 
   return (
-    <Provider>
-      <NavigationContainer>
-        <Navigation />
-      </NavigationContainer>
-    </Provider>
+      <Provider>
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
+      </Provider>
   )
 
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { navInterface } from '../data/interface';
@@ -12,11 +12,13 @@ import { globalStyles } from '../component/styles/GlobalStyles';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { authentication } from '../firebase/firebase-config';
 import { emailValidator, passwordValidator } from '../data/helpers/Validators';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 
 export const Login = ({ navigation }: navInterface) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
+  const [user, loading, error] = useAuthState(authentication);
 
   const onLoginPress = () => {
     const emailError = emailValidator(email.value)
@@ -28,8 +30,14 @@ export const Login = ({ navigation }: navInterface) => {
     }
     loginUser();
   }
+  useEffect(() => {
+    if(loading) return;
+    if (user) navigation.navigate("Dashboard");
+  }, [user, loading])
+  
 
   const loginUser = () => {
+
     signInWithEmailAndPassword(authentication, email.value, password.value)
       .then((res) => {
         navigation.navigate('Dashboard');
