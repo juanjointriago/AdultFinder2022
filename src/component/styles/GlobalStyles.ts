@@ -123,6 +123,20 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row'
     //backgroundColor: 'green',
   },
+  cardContainerStyle: {
+    display: 'flex',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: globalColors.lightBlue,
+    borderRadius: 100,
+    width: 65,
+    height: 65,
+  },
+  genericContainerStyle: {
+    height: ScreenSizeHeight ,
+    width: ScreenSizeWidth ,
+  },
+
 
 
 

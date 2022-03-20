@@ -3,11 +3,11 @@ import MapView, { Region, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import { navInterface } from '../data/interface';
 import Geolocation from 'react-native-geolocation-service';
 import { View } from 'react-native';
-import { Header } from '../component/containers/Header';
 import { Popup } from 'react-native-map-link';
 import { globalStyles, mapsStyle } from '../component/styles/GlobalStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalColors } from '../component/styles/Color';
+import { BackButton } from '../component/buttons/BackButton';
 
 
 
@@ -21,7 +21,7 @@ export const deltaCoords: coords = {
 }
 
 
-export const MapViewScreen = ({ navigation }: navInterface) => {
+export const MapViewScreen = () => {
     const otherUserLocation: coords = {
         lat: -2.0968673,
         lng: -79.8944256
@@ -65,13 +65,13 @@ export const MapViewScreen = ({ navigation }: navInterface) => {
 
     useEffect(() => {
         getcurrentLoc();
-    }, [getcurrentLoc])
+    }, [])
 
 
     return (
         <>
-            <View>
-                <Header title='Mapa' />
+            <View style={globalStyles.genericContainerStyle}>
+                <BackButton/>
                 <Popup
                     isVisible={visiblePopup}
                     onCancelPressed={() => setVisiblePopup(false)}
