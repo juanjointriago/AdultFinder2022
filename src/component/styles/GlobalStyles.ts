@@ -70,6 +70,7 @@ export const globalStyles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-end',
     marginBottom: 0,
+    color: globalColors.white
   },
   row: {
     flexDirection: 'row',
@@ -78,7 +79,7 @@ export const globalStyles = StyleSheet.create({
   forgot: {
     fontSize: 20,
     textDecorationLine: 'underline',
-    color: theme.colors.text,
+    color: globalColors.white,
   },
   link: {
     fontWeight: 'bold',

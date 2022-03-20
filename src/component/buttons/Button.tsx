@@ -11,7 +11,7 @@ export const Button = ({ mode, style, onPress,...props }: any) => {
                     marginVertical: 10,
                     paddingVertical: 2
                 },
-                mode === 'outlined' && { backgroundColor: theme.colors.error },
+                mode === 'outlined' && { backgroundColor: theme.colors.surface },
                 style
             ]}
             labelStyle={{

@@ -27,24 +27,25 @@ export const Login = ({ navigation }: navInterface) => {
       />
       <TextInput placeholder='Ingrese su Contraseña' value={password} secureTextEntry onChangeText={(text: any) => setPassword(text)} />
       <Button
-        title='No Tienes una Cuenta?'
-        color={globalColors.lightBlue}
+        title='Continuar'
+        color={globalColors.secondary}
         onPress={() => navigation.navigate('Dashboard')}
       />
-      <Button
-        title='Continuar'
-        color={globalColors.lightMint}
-        onPress={() => navigation.navigate('Register')}
-      />
-      <View style={globalStyles.forgotPassword}>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={globalStyles.forgot}>No tienes una Cuenta? Regístrate💻</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={globalStyles.registerLink}>
-        <TouchableOpacity onPress={() => navigation.navigate('ResetPasswordScreen')}>
-          <Text style={globalStyles.forgot}>Olvidaste tu contraseña?🔓</Text>
-        </TouchableOpacity>
+      <View style={{ margin: '5%' }}>
+        <View style={globalStyles.row}>
+          <Text style={{ color: globalColors.white }}>No tienes una cuenta? </Text>
+          <TouchableOpacity onPress={() => navigation.replace('Register')}>
+            <Text style={globalStyles.forgot}>Resgistrate aquí..!</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={globalStyles.row}>
+          <Text style={{ color: globalColors.white }}>Olvidaste tu contraseña? </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ResetPasswordScreen')}
+          >
+            <Text style={globalStyles.forgot}>presiona aquí..!</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Background>
   )

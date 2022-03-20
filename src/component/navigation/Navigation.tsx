@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { Dashboard } from '../../screens/Dashboard';
 import { Login } from '../../screens/Login';
 import { Register } from '../../screens/Register';
 import { ResetPasswordScreen } from '../../screens/ResetPasswordScreen';
@@ -17,6 +18,7 @@ export const Navigation = () => {
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Register' component={Register}/>
         <Stack.Screen name='ResetPasswordScreen' component={ResetPasswordScreen}/>
+        <Stack.Screen name='Dashboard' component={Dashboard}/>
     </Stack.Navigator>
   )
 }

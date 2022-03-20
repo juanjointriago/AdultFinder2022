@@ -10,7 +10,6 @@ import { navInterface } from '../data/interface'
 
 export const ResetPasswordScreen = ({ navigation }: navInterface) => {
     const [email, setEmail] = useState({ value: '', error: '' });
-    const [password, setPassword] = useState('')
     const sendResetPasswordEmail = () => {
         const emailError = emailValidator(email.value)
         if (emailError) {
@@ -40,7 +39,8 @@ export const ResetPasswordScreen = ({ navigation }: navInterface) => {
             <Button
                 mode='conatined'
                 onPress={sendResetPasswordEmail}
-                style={{ marginTop: 16 }}>
+                style={{ 
+                    marginTop: 16}}>
                 Recuperar Contraseña
             </Button>
         </Background>
