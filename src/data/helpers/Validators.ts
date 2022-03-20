@@ -1,17 +1,17 @@
-export function emailValidator(email: string) {
+export function emailValidator(email: any) {
   const re = /\S+@\S+\.\S+/
-  if (!email) return "Email can't be empty."
-  if (!re.test(email)) return 'Ooops! We need a valid email address.'
+  if (!email) return "Email no puede estar vacío!.👻"
+  if (!re.test(email)) return 'Ooops! Necesitamos una dirección de email. válida 😶‍🌫️'
   return ''
 }
 
-export function nameValidator(name: string) {
-  if (!name) return "Name can't be empty."
+export function nameValidator(name: any) {
+  if (!name) return "No puedes dejar tu nombre vacío ...! 😖"
   return ''
 }
 
-export function passwordValidator(password: string) {
-  if (!password) return "Password can't be empty."
-  if (password.length < 5) return 'Password must be at least 5 characters long.'
+export function passwordValidator(password: any) {
+  if (!password) return "No puedes dejar la contraseña vacía...!😭"
+  if (password.length < 5) return 'La contraseña debe tener al menos 8 caracteres 🔓😭'
   return ''
 }

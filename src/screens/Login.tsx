@@ -35,7 +35,7 @@ export const Login = ({ navigation }: navInterface) => {
         <View style={globalStyles.row}>
           <Text style={{ color: globalColors.white }}>No tienes una cuenta? </Text>
           <TouchableOpacity onPress={() => navigation.replace('Register')}>
-            <Text style={globalStyles.forgot}>Resgistrate aquí..!</Text>
+            <Text style={globalStyles.forgot}>Registrate aquí..!</Text>
           </TouchableOpacity>
         </View>
         <View style={globalStyles.row}>
