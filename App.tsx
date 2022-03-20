@@ -3,6 +3,7 @@ import { Navigation } from './src/component/navigation/Navigation';
 import React, { useEffect } from 'react';
 import { authentication } from './src/firebase/firebase-config';
 import OneSignal from 'react-native-onesignal';
+import { Provider } from 'react-native-paper';
 
 
 
@@ -19,9 +20,12 @@ const App = () => {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Navigation/>
-    </NavigationContainer>
+    <Provider>
+      <NavigationContainer>
+        <Navigation />
+      </NavigationContainer>
+    </Provider>
   )
+
 }
 export default App;

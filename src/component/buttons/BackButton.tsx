@@ -13,7 +13,7 @@ import { globalStyles } from '../styles/GlobalStyles';
  * @argument: none
  */
 
- export const BackButton = () => {
+export const BackButton = () => {
     const navigation = useNavigation();
     const goBack = () => {
         navigation.goBack();

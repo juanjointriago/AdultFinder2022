@@ -10,13 +10,21 @@ import { globalColors } from '../component/styles/Color';
 import { globalStyles } from '../component/styles/GlobalStyles';
 import { emailValidator, nameValidator, passwordValidator } from '../data/helpers/Validators';
 import { navInterface } from '../data/interface';
+import { PaperSelect } from 'react-native-paper-select';
 
 export const Register = ({ navigation }: navInterface) => {
   const [name, setName] = useState({ value: '', error: '' });
-  const [role, setRole] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-  console.log({name}, {email}, {password})
+  const [role, setRole] = useState({
+    value: '',
+    list: [
+      { _id: 'Cuidador', value: 'Cuidador' },
+      { _id: 'Paciente', value: 'Paciente' },
+    ],
+    selectedList: [],
+    error: '',
+  });
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)
@@ -48,6 +56,23 @@ export const Register = ({ navigation }: navInterface) => {
         onChangeText={(text: any) => setName({ value: text, error: '' })}
         error={!!name.error}
         errorText={name.error}
+      />
+      <PaperSelect
+        label='Seleccione su Rol'
+        value={role.value}
+        onSelection={(value: any) => {
+          setRole(
+            {
+              ...role,
+              value: value.text,
+              selectedList: value.selectedList,
+              error: '',
+            })
+        }}
+        arrayList={[...role.list]}
+        selectedArrayList={role.selectedList}
+        errorText={role.error}
+        multiEnable={false}
       />
       <TextInput
         label="Ingrese su email"
