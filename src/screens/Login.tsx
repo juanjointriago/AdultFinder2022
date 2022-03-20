@@ -9,7 +9,7 @@ import { Logo } from '../component/images/Logo';
 import { Header } from '../component/containers/Header';
 import { TextInput } from '../component/inputs/TextInput';
 import { globalStyles } from '../component/styles/GlobalStyles';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { authentication } from '../firebase/firebase-config';
 import { emailValidator, passwordValidator } from '../data/helpers/Validators';
 
@@ -33,7 +33,6 @@ export const Login = ({ navigation }: navInterface) => {
     signInWithEmailAndPassword(authentication, email.value, password.value)
       .then((res) => {
         navigation.navigate('Dashboard');
-
       })
       .catch((e) => {
         console.warn(e);
@@ -82,7 +81,7 @@ export const Login = ({ navigation }: navInterface) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('ResetPasswordScreen')}
           >
-            <Text style={globalStyles.forgot}>presiona aquí..!</Text>
+            <Text style={globalStyles.forgot}>Presiona aquí..!</Text>
           </TouchableOpacity>
         </View>
       </View>

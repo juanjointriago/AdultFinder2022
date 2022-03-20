@@ -1,17 +1,31 @@
 import { signOut } from 'firebase/auth';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native-paper';
-import { authentication } from '../firebase/firebase-config';
+import { authentication, db } from '../firebase/firebase-config';
+import { collection, getDocs} from 'firebase/firestore/lite';
 
 export const Dashboard = () => {
+  const [user, setUser] = useState({})
+  const getUserData = async () =>{
+    const userData = collection(db, 'users');
+    const usersnapshot = await getDocs(userData);
+    const userList = usersnapshot.docs.map(doc => doc.data());
+    setUser( userList )
+
+  }
+  useEffect(() => {
+    getUserData
+  }, [getUserData])
+  
   const LogOut = () => {
     signOut(authentication).then((res) => {
       //for get data of user
+
     }).catch((e) => {
       console.warn(e)
     })
   }
   return (
-    <Text>Dahboard</Text>
+    <Text>{user}</Text>
   )
 }

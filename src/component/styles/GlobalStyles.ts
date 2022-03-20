@@ -9,10 +9,9 @@ export const globalStyles = StyleSheet.create({
     height: 24,
   },
   header: {
-    fontSize: 21,
+    fontSize: 18,
     color: theme.colors.primary,
     fontWeight: 'bold',
-    paddingVertical: 12,
   },
   circleBack: {
     position: 'absolute',

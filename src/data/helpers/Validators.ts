@@ -12,6 +12,18 @@ export function nameValidator(name: any) {
 
 export function passwordValidator(password: any) {
   if (!password) return "No puedes dejar la contraseña vacía...!😭"
-  if (password.length < 5) return 'La contraseña debe tener al menos 8 caracteres 🔓😭'
+  if (password.length < 8) return 'La contraseña debe tener al menos 8 caracteres 🔓😭'
+  return ''
+}
+
+export function dniValidator(dni: any) {
+  if (!dni) return "No puedes dejar la cedula vacía...!😭"
+  if (dni.length < 10) return 'La cedula no tiene la cantidad especifica😭'
+  return ''
+}
+
+export function phoneValidator(phone: any) {
+  if (!phone) return "No puedes dejar el nro de telefono vacío...!😭"
+  if (phone.length < 10) return 'El número de telefono debe tener 10 digitos😭'
   return ''
 }
