@@ -37,10 +37,8 @@ export const Register = ({ navigation }: navInterface) => {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
+    //send data to firebase
+    navigation.navigate('Login');
   }
 
 

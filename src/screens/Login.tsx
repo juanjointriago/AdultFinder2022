@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, TouchableOpacity, View } from 'react-native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { navInterface } from '../data/interface';
 import { globalColors } from '../component/styles/Color';
@@ -9,27 +9,66 @@ import { Logo } from '../component/images/Logo';
 import { Header } from '../component/containers/Header';
 import { TextInput } from '../component/inputs/TextInput';
 import { globalStyles } from '../component/styles/GlobalStyles';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { authentication } from '../firebase/firebase-config';
+import { emailValidator, passwordValidator } from '../data/helpers/Validators';
 
 
 export const Login = ({ navigation }: navInterface) => {
-  const [isSigned, setIsSigned] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
+
+  const onLoginPress = () => {
+    const emailError = emailValidator(email.value)
+    const passwordError = passwordValidator(password.value)
+    if (emailError || passwordError) {
+      setEmail({ ...email, error: emailError })
+      setPassword({ ...password, error: passwordError })
+      return
+    }
+    loginUser();
+  }
+
+  const loginUser = () => {
+    signInWithEmailAndPassword(authentication, email.value, password.value)
+      .then((res) => {
+        navigation.navigate('Dashboard');
+
+      })
+      .catch((e) => {
+        console.warn(e);
+      })
+  }
+
   return (
     <Background>
       <BackButton />
       <Logo />
       <Header title='Ingresemos por aquí' />
       <TextInput
-        placeholder='Ingrese su Email'
-        value={email}
-        onChangeText={(text: any) => setEmail(text)}
+        error={!!email.error}
+        errorText={email.error}
+        returnKeyType="next"
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
+        label='Ingrese su Email'
+        value={email.value}
+        onChangeText={(text: any) => setEmail({ value: text, error: '' })}
       />
-      <TextInput placeholder='Ingrese su Contraseña' value={password} secureTextEntry onChangeText={(text: any) => setPassword(text)} />
+      <TextInput
+        label='Ingrese su Contraseña'
+        returnKeyType="done"
+        error={!!password.error}
+        errorText={password.error}
+        secureTextEntry
+        value={password.value}
+        onChangeText={(text: any) => setPassword({ value: text, error: '' })} />
       <Button
         title='Continuar'
         color={globalColors.secondary}
-        onPress={() => navigation.navigate('Dashboard')}
+        onPress={onLoginPress}
       />
       <View style={{ margin: '5%' }}>
         <View style={globalStyles.row}>
