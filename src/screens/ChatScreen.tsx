@@ -5,6 +5,9 @@ import { authentication, db } from '../firebase/firebase-config';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { collection, query, orderBy, addDoc, onSnapshot } from 'firebase/firestore';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { globalColors } from '../component/styles/Color';
+import { AVATAR } from '../data/const';
 
 export const ChatScreen = () => {
   const [messages, setMessages] = useState<any[]>([]);
@@ -55,13 +58,24 @@ export const ChatScreen = () => {
 
   const uu: any = {
     _id: authentication?.currentUser?.email,
-    avatar: authentication?.currentUser?.photoURL
+    avatar: AVATAR
   }
   return (
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
       user={uu}
+      placeholder={'Escriba un mensaje...'}
+      alwaysShowSend
+      // renderSend={() => <TouchableOpacity style={{
+      //   backgroundColor: globalColors.secondary,
+      //   borderRadius: 30,
+      //   width: '10%',
+      //   height: '100%',
+      //   justifyContent: 'center'
+      // }} onPress={messages => onSend(messages)}>
+      //   <Icon style={{alignSelf: 'center'}} size={25} color={globalColors.lightBlue} name='send' />
+      // </TouchableOpacity>}
     />
   )
 }

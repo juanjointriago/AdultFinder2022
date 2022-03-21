@@ -70,7 +70,7 @@ export const MapViewScreen = () => {
                     options={
                         {
                             dialogMessage: 'Listado de apicaciones compatibles con navegacion desde AdulFinder',
-                            dialogTitle: 'Abra su Mapa preferido',
+                            dialogTitle: 'Navegar al paciente 🚗',
                             cancelText: 'Cancelar',
                             appsWhiteList: ['waze', 'google-maps'],
                             appTitles: { ['waze']: 'Waze Maps', ['google-maps']: 'Google Maps' },
