@@ -82,3 +82,10 @@ gradlew assembleRelease
 ./gradlew assembleRelease
 
 # si por algún motivo al compilar la app los iconos no aparecen reinstale la libreria de vector-icons dentro del package.json o cualquier otra puede realizar el mismo proceso
+
+
+keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
+jj1992
+key1992
+
+./gradlew assembleRelease
