@@ -16,6 +16,7 @@ import { AuthenticatedUserContext } from '../../data/AuthenticatedUserProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper';
 import { ProfileScreen } from '../../screens/ProfileScreen';
+import { PerimeterScreen } from '../../screens/PerimeterScreen';
 
 
 
@@ -39,6 +40,7 @@ function LogedStack() {
       <Stack.Screen name='MapViewCIrcleScreen' component={MapViewCIrcleScreen} />
       <Stack.Screen name='ChatScreen' component={ChatScreen} />
       <Stack.Screen name='ProfileScreen' component={ProfileScreen} />
+      <Stack.Screen name='PerimeterScreen' component={PerimeterScreen} />
       
     </Stack.Navigator>
   )

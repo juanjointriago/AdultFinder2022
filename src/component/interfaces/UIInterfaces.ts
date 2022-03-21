@@ -33,6 +33,6 @@ export interface coords {
     lng: number
 }
 export const deltaCoords: coords = {
-    lat: 0.1,
-    lng: 0.19
+    lat: 0.0001,
+    lng: 0.002
 }

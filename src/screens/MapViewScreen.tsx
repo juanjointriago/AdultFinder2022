@@ -8,12 +8,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalColors } from '../component/styles/Color';
 import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase/firebase-config';
 
 export const MapViewScreen = () => {
-    const otherUserLocation: coords = {
-        lat: -2.0968673,
-        lng: -79.8944256
-    }
+    const [otherUserLocation, setotherUserLocation] = useState<coords>({
+        lat: -0,
+        lng: -0
+    })
     const [location, setLocation] = useState<coords>({
         lat: 0,
         lng: 0
@@ -49,10 +51,23 @@ export const MapViewScreen = () => {
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         )
     }
+    const getAndsetCords = async () => {
+        const collectionRef = collection(db, 'users');
+        const q = query(collectionRef, where("email", '==', 'juanintriagovillarrealdev@gmail.com'));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setotherUserLocation({
+                lat: doc.data().currentLat,
+                lng: doc.data().currentLng
+            })
+            console.log(doc.data());
+        })
+    }
 
 
     useEffect(() => {
         getcurrentLoc();
+        getAndsetCords();
     }, [])
 
 

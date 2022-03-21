@@ -9,18 +9,29 @@ import { globalColors } from '../component/styles/Color';
 import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
 import { Text } from 'react-native-paper';
+import { db } from '../firebase/firebase-config';
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 
 
 export const MapViewCIrcleScreen = () => {
-  const otherUserLocation: coords = {
-    lat: -2.0968673,
-    lng: -79.8944256
-  }
+
   const [location, setLocation] = useState<coords>({
     lat: 0,
     lng: 0
   });
+  const getAndsetCords = async () => {
+    const collectionRef = collection(db, 'users');
+    const q = query(collectionRef, where("email", '==', 'juanintriagovillarrealdev@gmail.com'));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setLocation({
+        lat: doc.data().currentLat,
+        lng: doc.data().currentLng
+      })
+      console.log(doc.data());
+    })
+  }
   const [visiblePopup, setVisiblePopup] = useState(false)
   const [region, setRegion] = useState<Region>({
     latitude: 0,
@@ -28,6 +39,14 @@ export const MapViewCIrcleScreen = () => {
     latitudeDelta: deltaCoords.lat,
     longitudeDelta: deltaCoords.lng,
   })
+  const setCordsOnFirebase = async ({ lat, lng }: any) => {
+    const q = doc(db, 'users', 'HP1mRnUOSGQUCcVrqJkg');
+    await updateDoc(q, {
+      currentLat: lat,
+      currentLng: lng,
+    });
+
+  }
   const getcurrentLoc = () => {
     Geolocation.getCurrentPosition((position) => {
       const currentLocation: coords = {
@@ -42,7 +61,7 @@ export const MapViewCIrcleScreen = () => {
       }
       setRegion(currentRegion)
       setLocation(currentLocation)
-
+      setCordsOnFirebase(currentLocation);
       //print
       //console.log(JSON.stringify(currentLocation));
     },
@@ -56,6 +75,7 @@ export const MapViewCIrcleScreen = () => {
 
   useEffect(() => {
     getcurrentLoc();
+    getAndsetCords();
   }, [])
   return (
     <>
@@ -75,14 +95,14 @@ export const MapViewCIrcleScreen = () => {
               cancelText: 'Cancelar',
               appsWhiteList: ['waze', 'google-maps'],
               appTitles: { ['waze']: 'Waze Maps', ['google-maps']: 'Google Maps' },
-              latitude: otherUserLocation.lat,
-              longitude: otherUserLocation.lng,
+              latitude: location.lat,
+              longitude: location.lng,
             }}
           onBackButtonPressed={() => setVisiblePopup(false)}
           appsWhiteList={['waze', 'google-maps',]}
         />
         <View style={{
-          
+
           alignSelf: 'center',
           top: '5%',
           backgroundColor: globalColors.neutral,
@@ -94,17 +114,17 @@ export const MapViewCIrcleScreen = () => {
             fontSize: 35,
             color: globalColors.white
           }}> Ubicación del paciente</Text>
-          
+
         </View>
-        <View  style={{
+        <View style={{
           marginTop: '20%',
           alignSelf: 'center',
           backgroundColor: globalColors.neutral,
           borderRadius: 5
-            , marginHorizontal: '-2%',
-            padding: '1%',
+          , marginHorizontal: '-2%',
+          padding: '1%',
         }}>
-        <Text style={{
+          <Text style={{
             top: '2%',
             alignSelf: 'center',
             fontSize: 12,
@@ -136,7 +156,7 @@ export const MapViewCIrcleScreen = () => {
               latitude: location.lat,
               longitude: location.lng
             }}
-            radius={3800}
+            radius={75}
             strokeWidth={1}
             strokeColor={'#1a66ff'}
             fillColor={'rgba(230,238,255,0.5)'}

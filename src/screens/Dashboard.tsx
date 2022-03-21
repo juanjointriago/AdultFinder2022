@@ -8,7 +8,6 @@ import { Image, ScrollView, View, Text } from 'react-native';
 import { globalStyles } from '../component/styles/GlobalStyles';
 import { BackButton } from '../component/buttons/BackButton';
 import { globalColors } from '../component/styles/Color';
-import { Logo } from '../component/images/Logo';
 import { ICON } from '../data/const';
 
 export const Dashboard = ({ navigation }: navInterface) => {
@@ -71,7 +70,9 @@ export const Dashboard = ({ navigation }: navInterface) => {
 
             <HomeManuCard
               descriptionText='Perímetro'
-              imageSrc='radio-outline'/>
+              imageSrc='radio-outline'
+              onPress={() => navigation.navigate('PerimeterScreen')}
+              />
             <HomeManuCard
               descriptionText='Salir'
               imageSrc='log-out-outline'
