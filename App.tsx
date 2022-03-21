@@ -1,10 +1,9 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { Navigation } from './src/component/navigation/Navigation';
 import React, { useEffect } from 'react';
-import { authentication } from './src/firebase/firebase-config';
 import OneSignal from 'react-native-onesignal';
 import { Provider } from 'react-native-paper';
 import { AuthenticatedUserProvider } from './src/data/AuthenticatedUserProvider';
+import { LogBox } from 'react-native';
 
 
 
@@ -19,7 +18,8 @@ const App = () => {
       console.log("OneSignal: notification opened:", notification);
     });
   }, [])
-
+  // Ignore log notification by message:
+  LogBox.ignoreAllLogs();
   return (
     <Provider>
       <AuthenticatedUserProvider>

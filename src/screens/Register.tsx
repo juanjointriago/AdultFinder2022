@@ -70,9 +70,10 @@ export const Register = ({ navigation }: navInterface) => {
       setDni({ ...dni, error: dniError });
       return
     }
-    createUserWithEmailAndPassword(authentication, email.value, password.value)
-    await addDoc(collection(db, 'users',)
-      , {
+    //send data to firebase
+
+    await addDoc(collection(db, 'users',),
+      {
         name: name.value,
         email: email.value,
         password: password.value,
@@ -85,7 +86,7 @@ export const Register = ({ navigation }: navInterface) => {
         phone: phone.value
       });
     console.log('Usuario agregado exitosamente: ', { user });
-    //send data to firebase
+    createUserWithEmailAndPassword(authentication, email.value, password.value)
     navigation.navigate('Login');
   }
 

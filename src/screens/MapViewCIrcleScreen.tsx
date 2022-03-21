@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalColors } from '../component/styles/Color';
 import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
+import { Text } from 'react-native-paper';
 
 
 
@@ -57,43 +58,106 @@ export const MapViewCIrcleScreen = () => {
     getcurrentLoc();
   }, [])
   return (
-    <MapView
-      zoomEnabled
-      scrollDuringRotateOrZoomEnabled
-      customMapStyle={mapsStyle}
-      style={[globalStyles.absoluteFill, {
-        marginVertical: '50%',
-        height: '50%',
-        width: '100%',
-      }]}
-
-      provider={PROVIDER_DEFAULT}
-      region={region}
-    >
-      <Circle
-        key={location.lat + location.lng}
-        center={{
-          latitude: location.lat,
-          longitude: location.lng
-        }}
-        radius={3800}
-        strokeWidth={1}
-        strokeColor={'#1a66ff'}
-        fillColor={'rgba(230,238,255,0.5)'}
-      />
-      <Marker
-          coordinate={
+    <>
+      <View style={[globalStyles.genericContainerStyle, { backgroundColor: globalColors.lightYellow }]}>
+        <BackButton />
+        <Popup
+          isVisible={visiblePopup}
+          onCancelPressed={() => setVisiblePopup(false)}
+          onAppPressed={() => setVisiblePopup(false)}
+          modalProps={{
+            animatioIn: 'slideInUp'
+          }}
+          options={
             {
+              dialogMessage: 'Listado de apicaciones compatibles con navegacion desde AdulFinder',
+              dialogTitle: 'Navegar al paciente 🚗',
+              cancelText: 'Cancelar',
+              appsWhiteList: ['waze', 'google-maps'],
+              appTitles: { ['waze']: 'Waze Maps', ['google-maps']: 'Google Maps' },
+              latitude: otherUserLocation.lat,
+              longitude: otherUserLocation.lng,
+            }}
+          onBackButtonPressed={() => setVisiblePopup(false)}
+          appsWhiteList={['waze', 'google-maps',]}
+        />
+        <View style={{
+          
+          alignSelf: 'center',
+          top: '5%',
+          backgroundColor: globalColors.neutral,
+          borderRadius: 10,
+          padding: '1%'
+        }} >
+          <Text style={{
+            alignSelf: 'center',
+            fontSize: 35,
+            color: globalColors.white
+          }}> Ubicación del paciente</Text>
+          
+        </View>
+        <View  style={{
+          marginTop: '20%',
+          alignSelf: 'center',
+          backgroundColor: globalColors.neutral,
+          borderRadius: 5
+            , marginHorizontal: '-2%',
+            padding: '1%',
+        }}>
+        <Text style={{
+            top: '2%',
+            alignSelf: 'center',
+            fontSize: 12,
+            color: globalColors.white,
+            textAlignVertical: 'center'
+          }}> Si la ubicación no se actualiza por algun problema de conectividad a redes eficientes, presione el boton hacia atrás e ingrese a esta pantalla nuevamente
+          </Text>
+        </View>
+        <MapView
+          zoomEnabled
+          scrollDuringRotateOrZoomEnabled
+          customMapStyle={mapsStyle}
+          style={{
+            alignSelf: 'center',
+            top: '5%',
+            height: '70%',
+            width: '90%',
+            borderColor: globalColors.black,
+            borderStyle: 'solid'
+          }}
+
+          provider={PROVIDER_DEFAULT}
+          region={region}
+        >
+
+          <Circle
+            key={location.lat + location.lng}
+            center={{
               latitude: location.lat,
               longitude: location.lng
             }}
-          title={'Ubicación de Paciente'}
-          description={`Ir a ubicación del Paciente`}
-        >
-          <Icon
-            name='walk-outline' size={25} color={globalColors.primary} />
-        </Marker>
-
-    </MapView>
+            radius={3800}
+            strokeWidth={1}
+            strokeColor={'#1a66ff'}
+            fillColor={'rgba(230,238,255,0.5)'}
+          />
+          <Marker
+            coordinate={
+              {
+                latitude: location.lat,
+                longitude: location.lng
+              }}
+            title={'Ubicación de Paciente'}
+            description={`Ir a ubicación del Paciente`}
+            onCalloutPress={
+              () => setVisiblePopup(true)
+            }
+          >
+            <Icon
+              name='walk-outline' size={25} color={globalColors.primary} />
+          </Marker>
+        </MapView>
+      </View>
+    </>
   )
 }

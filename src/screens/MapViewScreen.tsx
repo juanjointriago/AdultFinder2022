@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MapView, { Region, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Popup } from 'react-native-map-link';
 import { globalStyles, mapsStyle } from '../component/styles/GlobalStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -59,7 +59,7 @@ export const MapViewScreen = () => {
     return (
         <>
             <View style={globalStyles.genericContainerStyle}>
-                <BackButton/>
+                <BackButton />
                 <Popup
                     isVisible={visiblePopup}
                     onCancelPressed={() => setVisiblePopup(false)}
@@ -80,6 +80,38 @@ export const MapViewScreen = () => {
                     onBackButtonPressed={() => setVisiblePopup(false)}
                     appsWhiteList={['waze', 'google-maps',]}
                 />
+                <View style={{
+
+                    alignSelf: 'center',
+                    top: '5%',
+                    backgroundColor: globalColors.neutral,
+                    borderRadius: 10,
+                    padding: '1%'
+                }} >
+                    <Text style={{
+                        alignSelf: 'center',
+                        fontSize: 35,
+                        color: globalColors.white
+                    }}> Llegar al paciente</Text>
+
+                </View>
+                <View style={{
+                    marginTop: '20%',
+                    alignSelf: 'center',
+                    backgroundColor: globalColors.neutral,
+                    borderRadius: 5
+                    , marginHorizontal: '-2%',
+                    padding: '1%',
+                }}>
+                    <Text style={{
+                        top: '2%',
+                        alignSelf: 'center',
+                        fontSize: 14,
+                        color: globalColors.white,
+                        textAlignVertical: 'center'
+                    }}> Presioneen el marcador rojo (Paciente), para poder abrir su navegación
+                    </Text>
+                </View>
                 <MapView
                     zoomEnabled
                     scrollDuringRotateOrZoomEnabled
@@ -122,6 +154,23 @@ export const MapViewScreen = () => {
                     </Marker>
 
                 </MapView>
+                <View style={{
+                    marginTop: '140%',
+                    alignSelf: 'center',
+                    backgroundColor: globalColors.lightCyan,
+                    borderRadius: 5
+                    , marginHorizontal: '-2%',
+                    padding: '1%',
+                }}>
+                    <Text style={{
+                        top: '2%',
+                        alignSelf: 'center',
+                        fontSize: 14,
+                        color: globalColors.gray,
+                        textAlignVertical: 'center'
+                    }}> Uniandes Sede Ibarra 2022
+                    </Text>
+                </View>
             </View>
         </>
     )
