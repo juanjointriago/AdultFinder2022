@@ -59,6 +59,7 @@ export const Dashboard = ({ navigation }: navInterface) => {
               descriptionText='Perfil Usuario'
               imageSrc='options-outline'
               backgroundColor={globalColors.gray}
+              onPress={() => navigation.navigate('ProfileScreen')}
             />
             <HomeManuCard
               descriptionText='Mensajes'

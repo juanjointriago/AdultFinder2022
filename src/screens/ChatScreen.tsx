@@ -5,8 +5,6 @@ import { authentication, db } from '../firebase/firebase-config';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { collection, query, orderBy, addDoc, onSnapshot } from 'firebase/firestore';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { globalColors } from '../component/styles/Color';
 import { AVATAR } from '../data/const';
 
 export const ChatScreen = () => {

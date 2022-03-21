@@ -15,6 +15,7 @@ import { authentication } from '../../firebase/firebase-config';
 import { AuthenticatedUserContext } from '../../data/AuthenticatedUserProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper';
+import { ProfileScreen } from '../../screens/ProfileScreen';
 
 
 
@@ -37,6 +38,8 @@ function LogedStack() {
       <Stack.Screen name='MapViewScreen' component={MapViewScreen} />
       <Stack.Screen name='MapViewCIrcleScreen' component={MapViewCIrcleScreen} />
       <Stack.Screen name='ChatScreen' component={ChatScreen} />
+      <Stack.Screen name='ProfileScreen' component={ProfileScreen} />
+      
     </Stack.Navigator>
   )
 }
