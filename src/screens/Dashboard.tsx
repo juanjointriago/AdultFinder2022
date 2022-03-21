@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { authentication, db } from '../firebase/firebase-config';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore';
 import { navInterface } from '../data/interface';
 import { HomeManuCard } from '../component/containers/HomeManuCard';
 import { Image, ScrollView, View, Text } from 'react-native';
@@ -43,7 +43,7 @@ export const Dashboard = ({ navigation }: navInterface) => {
           <View style={globalStyles.cardTwoConatinerStyle}>
             <HomeManuCard
               descriptionText='Ubicar paciente'
-              imageSrc='location-outline'
+              imageSrc='walk-outline'
               onPress={() => navigation.navigate('MapViewCIrcleScreen')}
             />
             <HomeManuCard
@@ -56,13 +56,15 @@ export const Dashboard = ({ navigation }: navInterface) => {
           <View style={globalStyles.cardTwoConatinerStyle}>
 
             <HomeManuCard
-              descriptionText='Info Paciente'
-              imageSrc='information-circle-outline'
+              descriptionText='Perfil Usuario'
+              imageSrc='options-outline'
               backgroundColor={globalColors.gray}
             />
             <HomeManuCard
-              descriptionText='Info Cuidador'
-              imageSrc='information-outline' />
+              descriptionText='Mensajes'
+              imageSrc='chatbubbles-outline'
+              onPress={() => navigation.navigate('ChatScreen')}
+               />
           </View>
           <View style={globalStyles.cardTwoConatinerStyle}>
 

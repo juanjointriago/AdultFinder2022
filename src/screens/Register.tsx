@@ -12,7 +12,7 @@ import { dniValidator, emailValidator, nameValidator, passwordValidator, phoneVa
 import { navInterface } from '../data/interface';
 import { PaperSelect } from 'react-native-paper-select';
 import { ScrollView } from 'react-native-gesture-handler';
-import { addDoc, collection } from 'firebase/firestore/lite';
+import { addDoc, collection } from 'firebase/firestore';
 import { db, authentication } from '../firebase/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 

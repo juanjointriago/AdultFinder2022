@@ -24,6 +24,7 @@ function AuthStack() {
       <Stack.Screen name='WelcomeScreen' component={Welcome} />
       <Stack.Screen name='Login' component={Login} />
       <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen name='ResetPasswordScreen' component={ResetPasswordScreen} />
     </Stack.Navigator>
   )
 }
@@ -32,7 +33,6 @@ function LogedStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='WelcomeScreen' component={Welcome} />
-      <Stack.Screen name='ResetPasswordScreen' component={ResetPasswordScreen} />
       <Stack.Screen name='Dashboard' component={Dashboard} />
       <Stack.Screen name='MapViewScreen' component={MapViewScreen} />
       <Stack.Screen name='MapViewCIrcleScreen' component={MapViewCIrcleScreen} />
