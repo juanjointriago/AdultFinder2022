@@ -1,4 +1,3 @@
-import { signOut } from 'firebase/auth';
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { authentication, db } from '../firebase/firebase-config';
@@ -11,9 +10,6 @@ export const ChatScreen = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const navigation = useNavigation();
 
-  const logOut = () => {
-    signOut(authentication).catch(error => console.log(error));
-  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -65,15 +61,6 @@ export const ChatScreen = () => {
       user={uu}
       placeholder={'Escriba un mensaje...'}
       alwaysShowSend
-      // renderSend={() => <TouchableOpacity style={{
-      //   backgroundColor: globalColors.secondary,
-      //   borderRadius: 30,
-      //   width: '10%',
-      //   height: '100%',
-      //   justifyContent: 'center'
-      // }} onPress={messages => onSend(messages)}>
-      //   <Icon style={{alignSelf: 'center'}} size={25} color={globalColors.lightBlue} name='send' />
-      // </TouchableOpacity>}
     />
   )
 }

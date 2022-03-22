@@ -149,7 +149,6 @@ export const MapViewCIrcleScreen = () => {
           provider={PROVIDER_DEFAULT}
           region={region}
         >
-
           <Circle
             key={location.lat + location.lng}
             center={{
