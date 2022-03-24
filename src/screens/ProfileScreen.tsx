@@ -168,10 +168,10 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
                                 marginBottom: 20,
                                 width: 250,
                                 borderRadius: 30,
-                                backgroundColor: globalColors.secondary,
+                                backgroundColor: globalColors.lightBlue,
                             }}
                                 onPress={() => sendMessage('El Paciente está en Zona Segura ❤️')}>
-                                <Text>Creado por Juan Intriago Villarreal</Text>
+                                <Text>UniAndes Sede-Ibarra</Text>
                             </TouchableOpacity>
                         </> : null)}
                 </View>
