@@ -4,6 +4,7 @@ import OneSignal from 'react-native-onesignal';
 import { Provider } from 'react-native-paper';
 import { AuthenticatedUserProvider } from './src/data/AuthenticatedUserProvider';
 import { LogBox } from 'react-native';
+import { ONE_SIGNAL_APP_ID } from './src/data/const';
 
 
 
@@ -11,7 +12,7 @@ const App = () => {
   useEffect(() => {
     //OneSignal Init Code
     OneSignal.setLogLevel(6, 0);
-    OneSignal.setAppId("557b42e8-5d93-4bff-9a7a-f84d1d098938");
+    OneSignal.setAppId(ONE_SIGNAL_APP_ID);
     //END OneSignal Init Code
     //Method for handling notifications opened
     OneSignal.setNotificationOpenedHandler(notification => {

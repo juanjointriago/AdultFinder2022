@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import MapView, { Region, PROVIDER_DEFAULT, Marker, Circle } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { View } from 'react-native';
@@ -10,23 +10,48 @@ import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
 import { Text } from 'react-native-paper';
 import { db } from '../firebase/firebase-config';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 
 
 export const PerimeterScreen = () => {
 
+  const [perimeterLocation, setPerimeterLocation] = useState<coords>({
+    lat: -0,
+    lng: -0
+  })
 
-  const [perimeter, setPerimeter] = useState<coords>({ lat: 0.3365626, lng: -78.2176964 })
+  const getPerimeterCoords = async () => {
+    const docnRef = doc(db, 'perimeter', 'perimeter');
+    const docSnap = await getDoc(docnRef);
+    if (docSnap.exists()) {
+      console.log(docSnap.data());
+      setPerimeterLocation({
+        lat: docSnap.data().lat,
+        lng: docSnap.data().lng,
+      })
+      setRegion({
+        latitude: docSnap.data().lat,
+        longitude: docSnap.data().lng,
+        latitudeDelta: deltaCoords.lat,
+        longitudeDelta: deltaCoords.lng,
+      })
+    } else {
+      console.warn('problema al obtener coordenadas de la base de datos en el perimetro');
+    }
+  }
 
   const [visiblePopup, setVisiblePopup] = useState(false)
   const [region, setRegion] = useState<Region>({
-    latitude: perimeter.lat,
-    longitude: perimeter.lng,
+    latitude: 0,
+    longitude: 0,
     latitudeDelta: deltaCoords.lat,
     longitudeDelta: deltaCoords.lng,
   })
 
+  useEffect(() => {
+    getPerimeterCoords();
+  }, [])
   return (
     <>
       <View style={[globalStyles.genericContainerStyle, { backgroundColor: globalColors.lightYellow }]}>
@@ -45,14 +70,13 @@ export const PerimeterScreen = () => {
               cancelText: 'Cancelar',
               appsWhiteList: ['waze', 'google-maps'],
               appTitles: { ['waze']: 'Waze Maps', ['google-maps']: 'Google Maps' },
-              latitude: perimeter.lat,
-              longitude: perimeter.lng,
+              latitude: perimeterLocation.lat,
+              longitude: perimeterLocation.lng,
             }}
           onBackButtonPressed={() => setVisiblePopup(false)}
           appsWhiteList={['waze', 'google-maps',]}
         />
         <View style={{
-
           alignSelf: 'center',
           top: '5%',
           backgroundColor: globalColors.neutral,
@@ -101,10 +125,10 @@ export const PerimeterScreen = () => {
         >
 
           <Circle
-            key={perimeter.lat + perimeter.lng}
+            key={perimeterLocation.lat + perimeterLocation.lng}
             center={{
-              latitude: perimeter.lat,
-              longitude: perimeter.lng
+              latitude: perimeterLocation.lat,
+              longitude: perimeterLocation.lng
             }}
             radius={75}
             strokeWidth={1}
@@ -114,8 +138,8 @@ export const PerimeterScreen = () => {
           <Marker
             coordinate={
               {
-                latitude: perimeter.lat,
-                longitude: perimeter.lng
+                latitude: perimeterLocation.lat,
+                longitude: perimeterLocation.lng
               }}
             title={'Ubicación de Paciente'}
             description={`Ir a ubicación del Paciente`}

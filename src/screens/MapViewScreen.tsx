@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalColors } from '../component/styles/Color';
 import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { doc, getDoc, query, where, updateDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
 
 export const MapViewScreen = () => {
@@ -26,9 +26,18 @@ export const MapViewScreen = () => {
         longitude: 0,
         latitudeDelta: deltaCoords.lat,
         longitudeDelta: deltaCoords.lng,
-    })
-    const getcurrentLoc = () => {
-        Geolocation.getCurrentPosition((position) => {
+    });
+
+    const setCordsFirebase = async (lat: number, lng: number) => {
+        const docDeviceRef = doc(db, 'users', 'HP1mRnUOSGQUCcVrqJkg');
+        await updateDoc(docDeviceRef, {
+            currentLat: lat,
+            currentLng: lng
+        });
+    };
+
+    const getcurrentLoc = async () => {
+        await Geolocation.getCurrentPosition((position) => {
             const currentLocation: coords = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
@@ -39,8 +48,10 @@ export const MapViewScreen = () => {
                 latitudeDelta: deltaCoords.lat,
                 longitudeDelta: deltaCoords.lng,
             }
+            setCordsFirebase(position.coords.latitude, position.coords.longitude);
             setRegion(currentRegion)
             setLocation(currentLocation)
+
 
             //print
             //console.log(JSON.stringify(currentLocation));
@@ -51,17 +62,20 @@ export const MapViewScreen = () => {
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         )
     }
+
+
     const getAndsetCords = async () => {
-        const collectionRef = collection(db, 'users');
-        const q = query(collectionRef, where("email", '==', 'juanintriagovillarrealdev@gmail.com'));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
+        const docDeviceRef = doc(db, 'users', 'HP1mRnUOSGQUCcVrqJkg');
+
+        const docDeviceSnap = await getDoc(docDeviceRef);
+        if (docDeviceSnap.exists()) {
+            console.log(docDeviceSnap);
             setotherUserLocation({
-                lat: doc.data().currentLat,
-                lng: doc.data().currentLng
+                lat: docDeviceSnap.data().currentLat,
+                lng: docDeviceSnap.data().currentLng,
             })
-            console.log(doc.data());
-        })
+        }
+
     }
 
 

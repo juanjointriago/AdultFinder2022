@@ -12,16 +12,17 @@ import { ICON } from '../data/const';
 
 export const Dashboard = ({ navigation }: navInterface) => {
   const [user, setUser] = useState({})
-  const getUserData = async () => {
-    const userData = collection(db, 'users');
-    const usersnapshot = await getDocs(userData);
-    const userList = usersnapshot.docs.map(doc => doc.data());
-    setUser(userList)
-
-  }
+  
   useEffect(() => {
-    getUserData
-  }, [getUserData])
+    const getUserData = async () => {
+      const userData = collection(db, 'users');
+      const usersnapshot = await getDocs(userData);
+      const userList = usersnapshot.docs.map(doc => doc.data());
+      setUser(userList)
+      console.log(JSON.stringify(user));
+    }
+    getUserData()
+  }, [])
 
   const LogOut = () => {
     signOut(authentication).then((res) => {
@@ -80,6 +81,7 @@ export const Dashboard = ({ navigation }: navInterface) => {
               onPress={LogOut}
             />
           </View>
+          
         </View>
       </ScrollView>
     </View>

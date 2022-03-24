@@ -10,27 +10,52 @@ import { BackButton } from '../component/buttons/BackButton';
 import { coords, deltaCoords } from '../component/interfaces/UIInterfaces';
 import { Text } from 'react-native-paper';
 import { db } from '../firebase/firebase-config';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 
 
 export const MapViewCIrcleScreen = () => {
 
+  const [perimeterLocation, setPerimeterLocation] = useState<coords>({
+    lat: -0,
+    lng: -0
+  })
+  //get Perimeter Location from firebase
+  const getPerimeterCoords = async () => {
+    const docnRef = doc(db, 'perimeter', 'perimeter');
+    const docSnap = await getDoc(docnRef);
+    if (docSnap.exists()) {
+      console.log(docSnap.data());
+      setPerimeterLocation({
+        lat: docSnap.data().lat,
+        lng: docSnap.data().lng,
+      })
+      setRegion({
+        latitude: docSnap.data().lat,
+        longitude: docSnap.data().lng,
+        latitudeDelta: deltaCoords.lat,
+        longitudeDelta: deltaCoords.lng,
+      })
+    } else {
+      console.warn('problema al obtener coordenadas de la base de datos en el perimetro');
+    }
+  }
+
+  //circle
   const [location, setLocation] = useState<coords>({
-    lat: 0,
-    lng: 0
+    lat: -0,
+    lng: -0
   });
   const getAndsetCords = async () => {
-    const collectionRef = collection(db, 'users');
-    const q = query(collectionRef, where("email", '==', 'juanintriagovillarrealdev@gmail.com'));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
+    const deviceLocationFromDBRef = doc(db, 'users', 'HP1mRnUOSGQUCcVrqJkg');
+    const dlfDBSnap = await getDoc(deviceLocationFromDBRef);
+    if(dlfDBSnap.exists()){
+      console.log(dlfDBSnap);
       setLocation({
-        lat: doc.data().currentLat,
-        lng: doc.data().currentLng
+        lat: dlfDBSnap.data().currentLat,
+        lng: dlfDBSnap.data().currentLng
       })
-      console.log(doc.data());
-    })
+    }
   }
   const [visiblePopup, setVisiblePopup] = useState(false)
   const [region, setRegion] = useState<Region>({
@@ -39,7 +64,7 @@ export const MapViewCIrcleScreen = () => {
     latitudeDelta: deltaCoords.lat,
     longitudeDelta: deltaCoords.lng,
   })
-  const setCordsOnFirebase = async ({ lat, lng }: any) => {
+  const setCordsOnFirebase = async ({ lat, lng }: coords) => {
     const q = doc(db, 'users', 'HP1mRnUOSGQUCcVrqJkg');
     await updateDoc(q, {
       currentLat: lat,
@@ -47,23 +72,18 @@ export const MapViewCIrcleScreen = () => {
     });
 
   }
-  const getcurrentLoc = () => {
-    Geolocation.getCurrentPosition((position) => {
+  const getcurrentLoc = async () => {
+    await Geolocation.getCurrentPosition((position) => {
       const currentLocation: coords = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
-      const currentRegion: Region = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: deltaCoords.lat,
-        longitudeDelta: deltaCoords.lng,
-      }
-      setRegion(currentRegion)
+      getPerimeterCoords();
       setLocation(currentLocation)
       setCordsOnFirebase(currentLocation);
+      getAndsetCords();
       //print
-      //console.log(JSON.stringify(currentLocation));
+      console.log(JSON.stringify(currentLocation));
     },
       (error) => {
         console.log(error.code, error.message);
@@ -75,8 +95,7 @@ export const MapViewCIrcleScreen = () => {
 
   useEffect(() => {
     getcurrentLoc();
-    getAndsetCords();
-  }, [])
+  }, []);
   return (
     <>
       <View style={[globalStyles.genericContainerStyle, { backgroundColor: globalColors.lightYellow }]}>
@@ -150,16 +169,31 @@ export const MapViewCIrcleScreen = () => {
           region={region}
         >
           <Circle
-            key={location.lat + location.lng}
+            key={perimeterLocation.lat + perimeterLocation.lng}
             center={{
-              latitude: location.lat,
-              longitude: location.lng
+              latitude: perimeterLocation.lat,
+              longitude: perimeterLocation.lng
             }}
             radius={75}
             strokeWidth={1}
             strokeColor={'#1a66ff'}
             fillColor={'rgba(230,238,255,0.5)'}
           />
+          <Marker
+            coordinate={
+              {
+                latitude: perimeterLocation.lat,
+                longitude: perimeterLocation.lng
+              }}
+            title={'Ubicación de Asilo'}
+            description={`Ir a ubicación del Asilo`}
+            onCalloutPress={
+              () => setVisiblePopup(true)
+            }
+          >
+            <Icon
+              name='home-outline' size={25} color={globalColors.secondary} />
+          </Marker>
           <Marker
             coordinate={
               {
@@ -173,7 +207,7 @@ export const MapViewCIrcleScreen = () => {
             }
           >
             <Icon
-              name='walk-outline' size={25} color={globalColors.primary} />
+              name='person-outline' size={25} color={globalColors.primary} />
           </Marker>
         </MapView>
       </View>

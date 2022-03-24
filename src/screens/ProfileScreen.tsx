@@ -17,7 +17,6 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setUserData(doc.data())
-            console.log({ userData });
         })
     }
     useEffect(() => {
