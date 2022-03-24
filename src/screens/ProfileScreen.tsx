@@ -52,26 +52,26 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
 
     const sendMessage = (data: string) => {
         let headers = {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: "Basic MGQ2ZTVmMDItODNkNi00N2U4LThkMWQtODZkZDc0OGJkZDUx"
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Basic MGQ2ZTVmMDItODNkNi00N2U4LThkMWQtODZkZDc0OGJkZDUx"
         };
-    
+
         let endpoint = "https://onesignal.com/api/v1/notifications";
-    
+
         let params = {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify({
-            app_id: "557b42e8-5d93-4bff-9a7a-f84d1d098938",
-            included_segments: ["All"],
-            contents: { en: data }
-          })
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({
+                app_id: "557b42e8-5d93-4bff-9a7a-f84d1d098938",
+                included_segments: ["All"],
+                contents: { en: data }
+            })
         };
         fetch(endpoint, params).then(res => console.log(res));
-      };
+    };
 
 
-    
+
 
     useEffect(() => {
         getUserData();
@@ -143,20 +143,37 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
                         <Text>{userData.name}</Text>
                     </TouchableOpacity>
 
-                    {(user?.email === 'juanintriagovillarrealdev@gmail.com' ? <TouchableOpacity style={{
-                        marginTop: 10,
-                        height: 45,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20,
-                        width: 250,
-                        borderRadius: 30,
-                        backgroundColor: globalColors.secondary,
-                    }}
-                        onPress={() => sendMessage('Paciemte Fuera del Perímetro')}>
-                        <Text>Creado por Juan Intriago Villarreal</Text>
-                    </TouchableOpacity> : null)}
+                    {(user?.email === 'juanintriagovillarrealdev@gmail.com' ?
+                        <>
+                            <TouchableOpacity style={{
+                                marginTop: 10,
+                                height: 45,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginBottom: 20,
+                                width: 250,
+                                borderRadius: 30,
+                                backgroundColor: globalColors.secondary,
+                            }}
+                                onPress={() => sendMessage('El Paciente Salió del Perímetro 👴🦼')}>
+                                <Text>Creado por Juan Intriago Villarreal</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginTop: 10,
+                                height: 45,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginBottom: 20,
+                                width: 250,
+                                borderRadius: 30,
+                                backgroundColor: globalColors.secondary,
+                            }}
+                                onPress={() => sendMessage('El Paciente está en Zona Segura ❤️')}>
+                                <Text>Creado por Juan Intriago Villarreal</Text>
+                            </TouchableOpacity>
+                        </> : null)}
                 </View>
             </View>
         </View>
