@@ -7,6 +7,7 @@ import { BackButton } from '../component/buttons/BackButton';
 import { navInterface } from '../data/interface';
 import { authentication, db } from '../firebase/firebase-config';
 import { globalColors } from '../component/styles/Color';
+import { ONE_SIGNAL_API_REST_KEY, ONE_SIGNAL_APP_ID } from '../data/const';
 
 export const ProfileScreen = ({ navigation }: navInterface) => {
     const [userData, setUserData] = useState<any>({})
@@ -19,6 +20,59 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
             setUserData(doc.data())
         })
     }
+
+
+    const sendMessage1 = async (
+        data: any, id: any) => {
+        let headers = {
+            'Content-Type': 'application/json; charset=utf-8',
+            Authorization: "Basic 'MGQ2ZTVmMDItODNkNi00N2U4LThkMWQtODZkZDc0OGJkZDUx'",
+        };
+        let endpoint = 'https://onesignal.com/api/v1/notifications';
+        let params = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+                app_id: '557b42e8-5d93-4bff-9a7a-f84d1d098938',
+                filters: [   // Will send notification only to specific device
+                    {          // Optional
+                        field: 'tag',
+                        key: 'Id',
+                        relation: '=',
+                        value: id,
+                    },
+                ],
+                headings: { en: 'AdultFinder' },
+                contents: { en: data },
+                url: 'https://something.any', // optional
+            }),
+        };
+        fetch(endpoint, params).then(res => console.log(JSON.stringify(res)));
+    }
+
+    const sendMessage = (data: string) => {
+        let headers = {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Basic MGQ2ZTVmMDItODNkNi00N2U4LThkMWQtODZkZDc0OGJkZDUx"
+        };
+    
+        let endpoint = "https://onesignal.com/api/v1/notifications";
+    
+        let params = {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({
+            app_id: "557b42e8-5d93-4bff-9a7a-f84d1d098938",
+            included_segments: ["All"],
+            contents: { en: data }
+          })
+        };
+        fetch(endpoint, params).then(res => console.log(res));
+      };
+
+
+    
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -88,6 +142,21 @@ export const ProfileScreen = ({ navigation }: navInterface) => {
                     }}>
                         <Text>{userData.name}</Text>
                     </TouchableOpacity>
+
+                    {(user?.email === 'juanintriagovillarrealdev@gmail.com' ? <TouchableOpacity style={{
+                        marginTop: 10,
+                        height: 45,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20,
+                        width: 250,
+                        borderRadius: 30,
+                        backgroundColor: globalColors.secondary,
+                    }}
+                        onPress={() => sendMessage('Paciemte Fuera del Perímetro')}>
+                        <Text>Creado por Juan Intriago Villarreal</Text>
+                    </TouchableOpacity> : null)}
                 </View>
             </View>
         </View>
